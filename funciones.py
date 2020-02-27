@@ -36,3 +36,24 @@ def f_leer_archivo(param_archivo):
 
 
     return df_data
+
+    def f_pip_size(param_ins):
+
+    #tranformar a minusculas
+    inst =  param_ins.lower('-', '')
+
+    #lista de pips por instrumento
+    pips_inst = ('usdjpy': 100, 'gbpjpy': 100)
+
+    return pips_inst[inst]
+
+def f_columnas_datos(param_data):
+
+    param_data['closetime'] = pd.to_datetime(param_data['closetime'])
+    param_data['opentime'] = pd.to_datetime(param_data['opentime'])
+
+    param_data['tiempo'] = [(param_data.loc[i, 'closetime'] - param_data.loc[i, 'opentime']).delta/1e9
+         for i in range(0, len(param_data['closetime']))]
+
+    return 1
+
