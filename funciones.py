@@ -6,7 +6,7 @@
 # -- ------------------------------------------------------------------------------------ -- #
 
 import pandas as pd
-
+import numpy as np
 # -- ------------------------------------------------FUNCION: leer archivo de entrada#
 
 def f_leer_archivo(param_archivo):
@@ -24,6 +24,7 @@ def f_leer_archivo(param_archivo):
 
     """
     df_data = pd.read_excel('Archivos/' + param_archivo, sheet_name='Hoja1')
+    df_data = df_data[df_data.type != 'balance']
 
     df_data.columns = [list(df_data.columns)[i].lower()
                        for i in range(0, len(df_data.columns))]
@@ -37,17 +38,42 @@ def f_leer_archivo(param_archivo):
 
     return df_data
 
-    def f_pip_size(param_ins):
+def f_pip_size(param_ins):
+    """
+    Parameters
+    ------------
+    param_archivo : str : con info de historicos
+    Returns
+    ------
+    df_data : pd.Dataframe : con inforamcion contenida en archivo leido
 
-    #tranformar a minusculas
+    Debugging
+    -----
+    param_archivo = 'archivo_oanda.xlsx'
+
+    """
+    ## tranformar a minusculas
     inst =  param_ins.lower('-', '')
 
     #lista de pips por instrumento
-    pips_inst = ('usdjpy': 100, 'gbpjpy': 100)
+    pips_inst = {'usdmxn': 10000, 'eurusd': 10000}
 
     return pips_inst[inst]
 
-def f_columnas_datos(param_data):
+def f_columnas_tiempos(param_data):
+    """
+    Parameters
+    ------------
+    param_archivo : str : close y open time
+    Returns diferencia entre el open y el close time
+    ------
+    df_data : pd.Dataframe : con inforamcion contenida en archivo leido
+
+    Debugging
+    -----
+    param_archivo = 'archivo_oanda.xlsx'
+
+    """
 
     param_data['closetime'] = pd.to_datetime(param_data['closetime'])
     param_data['opentime'] = pd.to_datetime(param_data['opentime'])
@@ -56,4 +82,31 @@ def f_columnas_datos(param_data):
          for i in range(0, len(param_data['closetime']))]
 
     return 1
+
+def f_columnas_pips(param_data):
+    """
+    Parameters
+    ------------
+    param_archivo : str : transformaciones de pips
+    Returns valor acumulado de los pips
+    ------
+    df_data : pd.Dataframe : con inforamcion contenida en archivo leido
+
+    Debugging
+    -----
+    param_archivo = 'archivo_oanda.xlsx'
+
+    """
+    param_data['pips'] = 0
+
+    compras = np.where(param_data['type'] == 'buy')[0]
+    param_data['pips'][compras] = (param_data['closeprice'][compras]) -\
+                                  (param_data['openprice'][compras])
+
+
+    ventas = np.where(param_data['type'] == 'sell')[0]
+    param_data['pips'][ventas] = (param_data['openprice'][ventas]) - \
+                                  (param_data['closeprice'][ventas])
+
+
 
