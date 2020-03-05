@@ -10,4 +10,4 @@ import funciones as fn
 
 df_data = fn.f_leer_archivo(param_archivo='archivo_oanda.xlsx')
 fn.f_pip_size(param_ins = 'usdmxn')
-datos = fn.f_columnas_datos(param_data=datos)
+datos = fn.f_columnas_tiempos(param_data=df_data)
