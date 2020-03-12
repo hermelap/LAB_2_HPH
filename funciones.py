@@ -102,7 +102,7 @@ def f_columnas_pips(param_data):
     param_archivo = 'archivo_oanda.xlsx'
 
     """
-    param_data['pips'] = 0
+    param_data['pips'] = [
 
     compras = np.where(param_data['type'] == 'buy')[0]
     param_data['pips'][compras] = (param_data['closeprice'][compras]) - \
@@ -111,7 +111,15 @@ def f_columnas_pips(param_data):
     ventas = np.where(param_data['type'] == 'sell')[0]
     param_data['pips'][ventas] = (param_data['openprice'][ventas]) - \
                                  (param_data['closeprice'][ventas])
+    ]
 
-    param_data['pips_acm']
+    # calcular los pips acumulados de perdidas o ganancias
+    param_data['pips_acum'] = param_data['pips'].cumsum()
 
-    param_data['profit_acm']
+    # calcular la ganancia o perdida acumulada de la cuenta
+    param_data['profit_acm'] = param_data['profit'].cumsum()
+
+    return param_data
+
+
+
