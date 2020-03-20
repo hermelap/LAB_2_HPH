@@ -119,7 +119,39 @@ def f_columnas_pips(param_data):
     # calcular la ganancia o perdida acumulada de la cuenta
     param_data['profit_acm'] = param_data['profit'].cumsum()
 
+    # calcular el capital acumulado por operacion
+    param_data['capital_acm'] = 0
+    param_data['capital_acm'][0] = init_invest + param_data['profit'][0]
+    for i in range(1, len(param_data.index)):
+        param_data['capital_acm'][i] = param_data['capital_acm'][i - 1] + param_data['profit'][i]
+
     return param_data
 
+def f_estadisticas_ba(param_data):
+    """
 
+    :param param_data: Dataframe conteniendo las operaciones realizadas en la cuenta
+    :return: Diccionario conteniendo 2 dataframes:
+                1. Concentrado de las estadisticas basicas de la cuenta
+                2. ranking de los activos utilizados (% de ganadas/perdidas por cada activo utilizado)
+
+    Debugging
+    --------
+    param_data = datos
+    """
+
+    # lista
+    medidas = np.array(['Ops totales',
+                        'Ganadoras',
+                        'Ganadoras_c',
+                        'Ganadoras_v',
+                        'Perdedoras',
+                        'Perdedoras_c',
+                        'Perdedoras_v',
+                        'Media (Profit)',
+                        'Media (Pips)',
+                        'r_efectividad',
+                        'r_proporcion',
+                        'r_efectividad_c',
+                        'r_efectividad_v'])
 
