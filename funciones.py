@@ -155,3 +155,27 @@ def f_estadisticas_ba(param_data):
                         'r_efectividad_c',
                         'r_efectividad_v'])
 
+    # lista de descripciones de dataframe de las columnas de arriba
+
+    descripciones = np.array(['Operaciones totales',
+                              'Operaciones ganadoras',
+                              'Operaciones ganadoras de compra',
+                              'Operaciones ganadoras de venta',
+                              'Operaciones perdedoras',
+                              'Operaciones perdedoras de compra',
+                              'Operaciones perdedoras de venta',
+                              'Mediana de profit de operaciones',
+                              'Mediana de pips de operaciones',
+                              'Operaciones Totales Vs Ganadoras Totales',
+                              'Ganadoras Totales Vs Perdedoras Totales',
+                              'Totales Vs Ganadoras Compras',
+                              'Totales Vs Ganadoras Ventas'])
+
+    # crear el dataframe
+    df_1_tabla = pd.DataFrame(columns=['medidas', 'valor'],
+                              index=np.array([i for i in range(0, len(medidas))]))
+    # Llenar las medidas
+    df_1_tabla['medidas'] = [medidas[i] for i in range(0, len(df_1_tabla.index))]
+
+    # Llenar las descripciones
+    df_1_tabla['descripcion'] = [descripciones[i] for i in range(0, len(df_1_tabla.index))]
