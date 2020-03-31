@@ -179,3 +179,16 @@ def f_estadisticas_ba(param_data):
 
     # Llenar las descripciones
     df_1_tabla['descripcion'] = [descripciones[i] for i in range(0, len(df_1_tabla.index))]
+
+    # llenado de informacion
+    df_1_tabla.loc[0, 'valor'] = len(param_data.index)
+    df_1_tabla.loc[1, 'valor'] = sum(1 for i in param_data.index if param_data.loc[i, 'profit'] >= 0)
+    df_1_tabla.loc[2, 'valor'] = sum(1 for i in param_data.index if param_data.loc[i, 'profit'] >= 0 and
+                                     param_data.loc[i, 'type'] == 'buy')
+    df_1_tabla.loc[3, 'valor'] = sum(1 for i in param_data.index if param_data.loc[i, 'profit'] >= 0 and
+                                     param_data.loc[i, 'type'] == 'sell')
+    df_1_tabla.loc[4, 'valor'] = sum(1 for i in param_data.index if param_data.loc[i, 'profit'] < 0)
+    df_1_tabla.loc[5, 'valor'] = sum(1 for i in param_data.index if param_data.loc[i, 'profit'] < 0 and
+                                     param_data.loc[i, 'type'] == 'buy')
+    df_1_tabla.loc[6, 'valor'] = sum(1 for i in param_data.index if param_data.loc[i, 'profit'] < 0 and
+                                     param_data.loc[i, 'type'] == 'sell')
