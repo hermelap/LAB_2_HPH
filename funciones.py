@@ -70,7 +70,7 @@ def f_pip_size(param_ins):
     pips_inst = {'usdmxn': 10000, 'eurusd': 10000, 'usdjpy': 100, 'eurjpy': 100, 'audusd': 10000, 'gbpusd': 10000,
                  'usdchf': 10000, 'audjpy': 100, 'eurnzd': 10000, 'euraud': 10000, 'eurgbp': 10000, 'gbpjpy': 100,
                  'usdcad': 10000, 'audcad': 10000, 'eurcad': 10000, 'gbpaud': 10000, 'usdhkd': 10000, 'gbphkd': 10000,
-                 'cadhkd': 10000, 'xauusd': 10, 'btcusd': 1}
+                 'cadhkd': 10000, 'xauusd': 10, 'btcusd': 1, 'nzdusd': 10000}
 
     return pips_inst[inst] #cantidad de pips
 
@@ -353,6 +353,9 @@ def f_estadisticas_mad(param_data):
         if draw_down > draw_down_maximo:
             fin = valores_diarios.loc[i, 'timestamp']
             draw_down_maximo = draw_down
+    if draw_down_maximo == 0:
+        inicio = valores_diarios.loc[0, 'timestamp']
+        fin = valores_diarios.loc[0, 'timestamp']
     drawdown_capi = str(inicio) + ' ' + str(fin) + ' ' + str(draw_down_maximo)
 
     valores_mad.loc[3, 'valor'] = drawdown_capi
@@ -370,6 +373,9 @@ def f_estadisticas_mad(param_data):
         if draw_up > draw_up_maximo:
             fin = valores_diarios.loc[i, 'timestamp']
             draw_up_maximo = draw_up
+    if draw_up_maximo == 0:
+        inicio = valores_diarios.loc[0, 'timestamp']
+        fin = valores_diarios.loc[0, 'timestamp']
     drawup_capi = str(inicio) + ' ' + str(fin) + ' ' + str(draw_up_maximo)
 
     valores_mad.loc[4, 'valor'] = drawup_capi
@@ -620,11 +626,18 @@ def f_be_de(param_data):
                     sensibilidad_decreciente = sensibilidad_decreciente + 1
 
     parte_4['ocurrencias']['ocurrencias'] = ocurrencias
-    parte_4['resultados'] = parte_4['resultados'].append({'ocurrencias': ocurrencias,
-                                                                  'status_quo': status_quo / ocurrencias * 100,
-                                                                  'aversion_perdida': aversion_perdida / ocurrencias * 100,
-                                                                  'sensibilidad_decreciente': 'no'},
-                                                                 ignore_index=True)
+    try:
+        parte_4['resultados'] = parte_4['resultados'].append({'ocurrencias': ocurrencias,
+                                                                      'status_quo': status_quo / ocurrencias * 100,
+                                                                      'aversion_perdida': aversion_perdida / ocurrencias * 100,
+                                                                      'sensibilidad_decreciente': 'no'},
+                                                                     ignore_index=True)
+    except ZeroDivisionError:
+        parte_4['resultados'] = parte_4['resultados'].append({'ocurrencias': ocurrencias,
+                                                              'status_quo': 0,
+                                                              'aversion_perdida': 0,
+                                                              'sensibilidad_decreciente': 'no'},
+                                                             ignore_index=True)
 
     if ganadoras['capital_acum'].iloc[-1] > ganadoras['capital_acum'].iloc[0] and \
             np.abs(perdedoras['profit'].min() / ganadoras['profit'].max()) > 1.5 and \

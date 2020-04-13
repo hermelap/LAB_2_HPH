@@ -8,7 +8,7 @@
 import funciones as fn
 import visualizaciones as vs
 
-df_data = fn.f_leer_archivo(param_archivo='archivo_tradeview_1.xlsx')
+df_data = fn.f_leer_archivo(param_archivo='archivo_oanda.xlsx')
 fn.f_pip_size(param_ins='usdmxn')
 df_data = fn.f_columnas_tiempos(param_data=df_data)
 df_data = fn.f_columnas_pips(param_data=df_data)
