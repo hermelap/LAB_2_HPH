@@ -68,7 +68,7 @@ def f_pip_size(param_ins):
 
     # lista de pips por ticker
     pips_inst = {'usdmxn': 10000, 'eurusd': 10000, 'usdjpy': 100, 'eurjpy': 100, 'audusd': 10000, 'gbpusd': 10000,
-                 'usdchf': 10000, 'audjpy': 100, 'eurnzd':10000, 'euraud': 10000, 'eurgbp': 10000, 'gbpjpy': 100,
+                 'usdchf': 10000, 'audjpy': 100, 'eurnzd': 10000, 'euraud': 10000, 'eurgbp': 10000, 'gbpjpy': 100,
                  'usdcad': 10000, 'audcad': 10000, 'eurcad': 10000, 'gbpaud': 10000, 'usdhkd': 10000, 'gbphkd': 10000,
                  'cadhkd': 10000, 'xauusd': 10, 'btcusd': 1}
 

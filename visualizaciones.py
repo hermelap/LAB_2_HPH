@@ -6,11 +6,11 @@
 # -- ------------------------------------------------------------------------------------ -- #
 
 import numpy as np
-import plotly.graph_objects as go
+from plotly import graph_objs as go
 import plotly.io as pio
 import pandas as pd
 
-pio.renderers.default = "browser"
+pio.renderers.default = 'browser'
 
 
 def pastel(diccionario):
